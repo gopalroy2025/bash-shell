@@ -1,0 +1,5 @@
+High RAM and CPU consumption script
+
+ps aux --sort=-%mem | awk 'NR<=10{print $0}'
+
+
