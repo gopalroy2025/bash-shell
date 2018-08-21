@@ -1,0 +1,16 @@
+Shell script for logrotating in jboss on linux 
+
+Q1- want to archive the log files to a particular directory lets(/usr/local/jboss-5.10..GA/server/archive/log) older than 2 months .
+
+Q2- want to delete logs older than 2 months from archive directory. the format of log is server.log.2015-08-11 ?
+
+logs present in below path - cd /usr/local/jboss-5.1.0.GA/server/pymidol/log/
+
+answers
+First create some space by removing files
+
+answer (2) question for removing the files from arhive directory
+find /usr/local/jboss-5.10..GA/server/archive/log -type f  -name server.log.* -mtime +60 -exec rm {} \;
+
+answer 1 
+find /usr/local/jboss-5.10..GA/server/pymidol/log -type f  -name server.log.* -mtime +60 -exec mv {} /usr/local/jboss-5.10..GA/server/archive/log  \;
