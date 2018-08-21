@@ -1,0 +1,46 @@
+Intersting story how bash shell script is executed in linux .
+
+
+I am reading an article on executing bash shell scripts.
+
+Method 1: Create a directory for your shell scripts and add the directory to the contents of the PATH variable, so that you can execute the script as shown below. When 
+
+this executes, the variables, functions and aliases created in this subshell are only known to the particular bash session of that subshell. When that shell exits and 
+
+the parent regains control, everything is cleaned up and all changes to the state of the shell made by the script, are forgotten.
+$ hello_world.sh
+
+Method 2: A script can also explicitly be executed by a given shell. The specified shell will start as a subshell of your current shell and execute the script.
+$ sh script_name.sh
+
+Method 3: If you don't want to start a new shell but execute the script in the current shell, you source it:
+source script_name.sh
+
+I really don't understand the benefits and disadvantages of each of these methods. Can anyone clarify?
+
+
+Answer
+This executes the program called hello_world.sh in the program search path (PATH). If that program happens to start with a shebang line, that line indicates that the 
+
+program must be passed to an interpreter in order to be executed; otherwise the program must be loaded as native code. The shebang line is read by the kernel. For 
+
+example, if the first line of hello_world.sh is #!/bin/sh, then the kernel launches /bin/sh and passes it hello_world.sh as an argument.
+
+If hello_world.sh neither begins with a shebang nor is valid native code, then the kernel will return an error when you try to execute it. If you're doing that from a 
+
+shell, the shell will notice the error and try to execute hello_world.sh as a shell script (like the second form below).
+
+sh script_name.sh
+
+This runs the program called sh found in the PATH, with script_name.sh passed as an argument. The program sh, assuming that it's the usual shell, will open the file 
+
+called script_name.sh in the current directory and interpret it. If the script starts with a shebang line, it's ignored. The script doesn't need to be executable.
+
+. script_name.sh
+source script_name.sh
+
+When you execute this in a shell, either of these instructions tells the running shell to interpret the commands in the specified file. The script isn't executed as a 
+
+separate program, but as part of the existing shell process. Thus the script can affect the current directory, the environment, … of the running shell. The builtin 
+
+commands . and source are synonymous, except that . only searches script_name.sh in the PATH whereas in some shells source also looks in the current directory.
