@@ -1,0 +1,18 @@
+
+
+process consuming more than 3% of CPU/Memory every 15 mins script
+
+#!/bin/bash
+end=$((SECONDS+900))
+
+while [ $SECONDS -lt $end ];
+sleep 900
+do
+    Cpu=$ ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%mem | head > null
+if [[ "Cpu" -gt "3" ]];
+then
+echo ok
+else
+echo not ok
+fi
+done
