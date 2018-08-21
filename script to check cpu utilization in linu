@@ -1,0 +1,19 @@
+
+
+CPU consumption every minute in bash and cron 
+script to check cpu utilization in linux
+
+Put this into a bash script somewhere on your system (/opt for example
+#!/bin/bash
+
+CPU_USAGE=$(top -b -n2 -p 1 | fgrep "Cpu(s)" | tail -1 | awk -F'id,' -v prefix="$prefix" '{ split($1, vs, ","); v=vs[length(vs)]; sub("%", "", v); printf "%s%.1f%%\n", prefix, 100 - v }')
+DATE=$(date "+%Y-%m-%d %H:%M:")
+CPU_USAGE="$DATE CPU: $CPU_USAGE"
+echo $CPU_USAGE >> /opt/cpu_usage.out
+
+next
+
+Then create a file called cpu_usage under /etc/cron.d/ with the following in:
+*/1 * * * * root /opt/your_script.sh
+
+This should execute the script once per minute, and output the CPU usage in a percentage format on a new line within the specified file
