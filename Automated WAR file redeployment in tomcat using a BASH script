@@ -69,5 +69,6 @@ echo "redeployed successfully"
 An example of how to run the script:
 ./deploy.sh TaskRequest /home/philip/TaskRequest.war
 
-If you plan on reusing my script, one of the things you'll most likely want to change is the 'tomcatHome' variable and the way I move copies of the old WAR file out of the web-apps folder.
-Make sure that you have permissions to execute the bash script:
+If you plan on reusing my script, one of the things you'll most likely want to change is the 'tomcatHome' variable and 
+the way I move copies of the old WAR file out of the web-apps folder.
+Make sure that you have permissions to execute the bash script
